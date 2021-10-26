@@ -12,7 +12,8 @@ const app = express();
 // Process JSON input and put the data on req.body
 app.use(express.json());
 
-const sequelize = new Sequelize(process.env.DATABASE_URL);
+let DATABASE_URL = process.env.DATABASE_URL || 'sqlite:memory';
+const sequelize = new Sequelize(DATABASE_URL);
 
 // Process FORM intput and put the data on req.body
 app.use(express.urlencoded({ extended: true }));
@@ -29,6 +30,12 @@ const Users = sequelize.define('User', {
   }
 });
 
+// use a before Hook, runs before we create any user
+Users.beforeCreate(async (user) => {
+  let encryptedPassword = await bcrypt.hash(user.password, 10);
+  user.password = encryptedPassword;
+});
+
 // Signup Route -- create a new user
 // Two ways to test this route with httpie
 // echo '{"username":"john","password":"foo"}' | http post :3000/signup
@@ -38,7 +45,7 @@ app.post('/signup', async (req, res) => {
   try {
     req.body.password = await bcrypt.hash(req.body.password, 10);
     const record = await Users.create(req.body);
-    res.status(200).json(record);
+    res.status(201).json(record);
   } catch (e) { res.status(403).send("Error Creating User"); }
 });
 

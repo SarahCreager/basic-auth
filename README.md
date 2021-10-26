@@ -5,6 +5,12 @@ Created by Sarah Creager
 ## Installation
 `npm install`  
 
+*sample .env file:*
+``` 
+PORT=3001
+
+DATABASE_URL=postgresql://localhost:5432
+```
 
 ## Dependencies
  * base-64
