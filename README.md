@@ -26,7 +26,7 @@ DATABASE_URL=postgresql://localhost:5432
 
 
 ## Summary of Problem Domain
-Built basic auth
+Built basic auth server that allows authentication with username and password.
 
 ## Links to application deployment
 
@@ -41,8 +41,8 @@ Built basic auth
 ## Routes
 
 Method: POST
-Path: /  
+Path: /signup  
 
 Method: POST
-Path: /  
+Path: /signin
 
