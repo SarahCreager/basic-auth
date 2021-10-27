@@ -19,9 +19,9 @@ const options = process.env.NODE_ENV === 'production'
   : {};
 
 const sequelize = new Sequelize(DATABASE_URL, options);
-const User = UserModel(sequelize, DataTypes);
+
 
 module.exports = {
   db: sequelize,
-  User
+  User: UserModel(sequelize, DataTypes)
 }
